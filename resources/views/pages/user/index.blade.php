@@ -116,15 +116,15 @@
       <div class="container" data-aos="zoom-out">
 
         <div class="row gy-4">
-
+        @foreach ($chartData as $data)
           <div class="col-lg-3 col-md-6">
             <div class="stats-item text-center w-100 h-100">
-              <span data-purecounter-start="0" data-purecounter-end="232" data-purecounter-duration="1" class="purecounter"></span>
-              <p>Cakes</p>
+              <span data-purecounter-start="0" data-purecounter-end="{{ $data['total_produk'] }}" data-purecounter-duration="1" class="purecounter"></span>
+              <p>{{ $data['category_name'] }}</p>
             </div>
           </div><!-- End Stats Item -->
-
-          <div class="col-lg-3 col-md-6">
+          @endforeach
+          {{-- <div class="col-lg-3 col-md-6">
             <div class="stats-item text-center w-100 h-100">
               <span data-purecounter-start="0" data-purecounter-end="521" data-purecounter-duration="1" class="purecounter"></span>
               <p>Pastry</p>
@@ -143,7 +143,7 @@
               <span data-purecounter-start="0" data-purecounter-end="32" data-purecounter-duration="1" class="purecounter"></span>
               <p>Donuts</p>
             </div>
-          </div><!-- End Stats Item -->
+          </div><!-- End Stats Item --> --}}
 
         </div>
 
@@ -160,17 +160,18 @@
         </div>
 
         <ul class="nav nav-tabs d-flex justify-content-center" data-aos="fade-up" data-aos-delay="200">
-
-          <li class="nav-item">
-            <a class="nav-link active show" data-bs-toggle="tab" data-bs-target="#menu-starters">
-              <h4>Cakes</h4>
-            </a>
-          </li><!-- End tab nav item -->
-
-          <li class="nav-item">
+            @foreach ($chartData as $data)
+            <li class="nav-item">
+                <a class="nav-link {{ $loop->first ? ' active show' : '' }}" data-bs-toggle="tab" data-bs-target="#menu-{{ $data['category_name'] }}">
+                <h4>{{ $data['category_name'] }}</h4>
+                </a>
+            </li><!-- End tab nav item -->
+            @endforeach
+          {{-- <li class="nav-item">
             <a class="nav-link" data-bs-toggle="tab" data-bs-target="#menu-breakfast">
               <h4>Pastry</h4>
-            </a><!-- End tab nav item -->
+            </a>
+        </li><!-- End tab nav item -->
 
           <li class="nav-item">
             <a class="nav-link" data-bs-toggle="tab" data-bs-target="#menu-lunch">
@@ -182,33 +183,40 @@
             <a class="nav-link" data-bs-toggle="tab" data-bs-target="#menu-dinner">
               <h4>Donuts</h4>
             </a>
-          </li><!-- End tab nav item -->
+          </li><!-- End tab nav item --> --}}
 
         </ul>
 
         <div class="tab-content" data-aos="fade-up" data-aos-delay="300">
-
-          <div class="tab-pane fade active show" id="menu-starters">
+        @foreach ($chartData as $data)
+          <div class="tab-pane fade {{ $loop->first ? ' active show' : '' }}" id="menu-{{ $data['category_name'] }}">
 
             <div class="tab-header text-center">
               <p>Menu</p>
-              <h3>Cakes</h3>
+              <h3>{{ $data['category_name'] }}</h3>
             </div>
 
             <div class="row gy-5">
-
-              <div class="col-lg-4 menu-item">
-                <a href="assets/img/menu/menu-item-4.png" class="glightbox"><img src="assets/img/menu/menu-item-4.png" class="menu-img img-fluid" alt=""></a>
-                <h4>Eos Luibusdam</h4>
-                <p class="ingredients">
-                  Lorem, deren, trataro, filede, nerada
-                </p>
-                <p class="price">
-                  $12.95
-                </p>
-              </div><!-- Menu Item -->
-
-              <div class="col-lg-4 menu-item">
+            @foreach ($chartData as $menu)
+                @if ($menu['category_name'] === $data['category_name'])
+                <div class="col-lg-4 menu-item">
+                    {{-- @php
+                        $images = json_decode($menu['image']);
+                    @endphp --}}
+                    @foreach ($menu['image'] as $image)
+                    <a href="{{ asset('storage/image/'.$image) }}" class="glightbox"><img src="{{ asset('storage/image/'.$image) }}" class="menu-img img-fluid" alt=""></a>
+                    @endforeach
+                    <h4>{{ $menu['product_name'] }}</h4>
+                    <p class="ingredients text-center">
+                    {{ $menu['description'] }}
+                    </p>
+                    <p class="price">
+                        Rp{{ number_format($menu['price'], 0, ',', '.') }}
+                    </p>
+                </div><!-- Menu Item -->
+                @endif
+              @endforeach
+              {{-- <div class="col-lg-4 menu-item">
                 <a href="assets/img/menu/menu-item-5.png" class="glightbox"><img src="assets/img/menu/menu-item-5.png" class="menu-img img-fluid" alt=""></a>
                 <h4>Eos Luibusdam</h4>
                 <p class="ingredients">
@@ -228,12 +236,12 @@
                 <p class="price">
                   $9.95
                 </p>
-              </div><!-- Menu Item -->
+              </div><!-- Menu Item --> --}}
 
             </div>
           </div><!-- End Starter Menu Content -->
-
-          <div class="tab-pane fade" id="menu-breakfast">
+        @endforeach
+          {{-- <div class="tab-pane fade" id="menu-breakfast">
 
             <div class="tab-header text-center">
               <p>Menu</p>
@@ -366,7 +374,7 @@
               </div><!-- Menu Item -->
 
             </div>
-          </div><!-- End Dinner Menu Content -->
+          </div><!-- End Dinner Menu Content --> --}}
 
         </div>
 
@@ -384,7 +392,7 @@
 
         <div class="slides-1 swiper" data-aos="fade-up" data-aos-delay="100">
           <div class="swiper-wrapper">
-
+            @foreach ($testimoni as $testimonials)
             <div class="swiper-slide">
               <div class="testimonial-item">
                 <div class="row gy-4 justify-content-center">
@@ -392,11 +400,11 @@
                     <div class="testimonial-content">
                       <p>
                         <i class="bi bi-quote quote-icon-left"></i>
-                        Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit rhoncus. Accusantium quam, ultricies eget id, aliquam eget nibh et. Maecen aliquam, risus at semper.
+                        {{ $testimonials->message }}
                         <i class="bi bi-quote quote-icon-right"></i>
                       </p>
-                      <h3>Saul Goodman</h3>
-                      <h4>Ceo &amp; Founder</h4>
+                      <h3>{{ $testimonials->name }}</h3>
+                      <h4>{{ $testimonials->job}}</h4>
                       <!-- <div class="stars">
                         <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
                       </div> -->
@@ -408,8 +416,8 @@
                 </div>
               </div>
             </div><!-- End testimonial item -->
-
-            <div class="swiper-slide">
+            @endforeach
+            {{-- <div class="swiper-slide">
               <div class="testimonial-item">
                 <div class="row gy-4 justify-content-center">
                   <div class="col-lg-6">
@@ -421,17 +429,17 @@
                       </p>
                       <h3>Sara Wilsson</h3>
                       <h4>Designer</h4>
-                      {{-- <div class="stars">
+                      <div class="stars">
                         <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-                      </div> --}}
+                      </div>
                     </div>
                   </div>
-                  {{-- <div class="col-lg-2 text-center">
+                  <div class="col-lg-2 text-center">
                     <img src="assets/img/testimonials/testimonials-2.jpg" class="img-fluid testimonial-img" alt="">
-                  </div> --}}
+                  </div>
                 </div>
               </div>
-            </div><!-- End testimonial item -->
+            </div><!-- End testimonial item --> --}}
 
           </div>
           <div class="swiper-pagination"></div>

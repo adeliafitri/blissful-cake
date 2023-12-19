@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SesiController;
@@ -21,9 +22,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware(['guest'])->group(function() {
-    Route::get('/', function () {
-        return view('pages.user.index');
-    });
+    Route::get('/', [HomeController::class, 'index']);
     Route::post('/testimoni/store', [TestimoniController::class, 'store'])->name('testimoni.store');
     Route::get('/login', [SesiController::class, 'index'])->name('login');
     Route::post('/login', [SesiController::class, 'login']);
@@ -58,7 +57,7 @@ Route::middleware(['guest'])->group(function() {
         Route::put('/products/{id}', [ProductController::class, 'update'])->name('products.update');
         Route::delete('/products/{id}', [ProductController::class, 'destroy'])->name('products.delete');
 
-        Route::put('/profile/{id}', [ProfileController::class, 'show'])->name('profile');
+        Route::get('/profile/{id}', [ProfileController::class, 'show'])->name('profile');
         Route::get('/profile/{id}/edit', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::put('/profile/{id}', [ProfileController::class, 'update'])->name('profile.update');
 

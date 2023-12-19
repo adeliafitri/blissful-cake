@@ -17,8 +17,8 @@
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Dashboard v1</li>
+              <li class="breadcrumb-item active">Home</li>
+              {{-- <li class="breadcrumb-item active">Dashboard v1</li> --}}
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -35,14 +35,14 @@
                     <!-- small box -->
                     <div class="small-box bg-info">
                     <div class="inner">
-                        <h3>80</h3>
-                        {{-- <h3>{{ $count_produk }}</h3> --}}
+                        {{-- <h3>80</h3> --}}
+                        <h3>{{ $count_produk }}</h3>
                         <p>Jumlah Produk</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-bag"></i>
                     </div>
-                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="{{ route('products') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <!-- ./col -->
@@ -50,29 +50,14 @@
                     <!-- small box -->
                     <div class="small-box bg-success">
                     <div class="inner">
-                        <h3>15</h3>
-                        {{-- <h3>{{ $total_category }}</h3> --}}
+                        {{-- <h3>15</h3> --}}
+                        <h3>{{ $total_category }}</h3>
                         <p>Jumlah Kategori Produk</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-stats-bars"></i>
                     </div>
-                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-                <!-- ./col -->
-                <div class="col-lg-3 col-6">
-                    <!-- small box -->
-                    <div class="small-box bg-warning">
-                    <div class="inner">
-                        <h3>90</h3>
-                        {{-- <h3>Rp. {{ number_format($total_harga, 0, ',', '.') }}</h3> --}}
-                        <p>Total Harga Semua Produk</p>
-                    </div>
-                    <div class="icon">
-                        <i class="ion ion-person-add"></i>
-                    </div>
-                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="{{ route('productCategories') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <!-- ./col -->
@@ -80,17 +65,51 @@
                     <!-- small box -->
                     <div class="small-box bg-danger">
                     <div class="inner">
-                        <h3>100</h3>
-                        {{-- <h3>{{ $total_stok }}</h3> --}}
+                        {{-- <h3>100</h3> --}}
+                        <h3>{{ $total_stok }}</h3>
                         <p>Jumlah Stok Semua Produk</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-pie-graph"></i>
                     </div>
-                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="{{ route('products') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <!-- ./col -->
+                @if(auth()->check() && auth()->user()->role == 'superadmin')
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-warning">
+                    <div class="inner">
+                        <h3>{{ $jumlah_testimoni }}</h3>
+                        {{-- <h3>Rp. {{ number_format($total_harga, 0, ',', '.') }}</h3> --}}
+                        <p>Jumlah Testimoni</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-person-add"></i>
+                    </div>
+                    <a href="{{ route('testimoni') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <!-- ./col -->
+                @endif
+                @if(auth()->check() && auth()->user()->role == 'admin')
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-warning">
+                    <div class="inner">
+                        {{-- <h3>{{ $jumlah_testimoni }}</h3> --}}
+                        <h3>Rp{{ number_format($total_harga, 0, ',', '.') }}</h3>
+                        <p>Total Harga Semua Produk</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-person-add"></i>
+                    </div>
+                    <a href="{{ route('testimoni') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <!-- ./col -->
+                @endif
             </div>
         <!-- /.row -->
         <!-- Main row -->
@@ -99,12 +118,12 @@
             <section class="col-lg-7 connectedSortable">
               <!-- Custom tabs (Charts with tabs)-->
               <div class="card">
-                {{-- <div class="card-header">
+                <div class="card-header">
                   <h3 class="card-title">
                     <i class="fas fa-chart-pie mr-1"></i>
-                    Sales
+                    Jumlah Product
                   </h3>
-                </div><!-- /.card-header --> --}}
+                </div><!-- /.card-header -->
                 <div class="card-body">
                   <div class="tab-content p-0">
                     <!-- Morris chart - Sales -->
@@ -112,30 +131,6 @@
                          style="position: relative; height: 300px;">
                         {{-- <canvas id="revenue-chart-canvas" height="300" style="height: 300px;"></canvas> --}}
                         <div id="chartProduk" style="height: 300px;"></div>
-                     </div>
-                    {{-- <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;">
-                      <canvas id="sales-chart-canvas" height="300" style="height: 300px;"></canvas>
-                    </div> --}}
-                  </div>
-                </div><!-- /.card-body -->
-              </div>
-              <!-- /.card -->
-
-              <!-- Custom tabs (Charts with tabs)-->
-              <div class="card">
-                {{-- <div class="card-header">
-                  <h3 class="card-title">
-                    <i class="fas fa-chart-pie mr-1"></i>
-                    Sales
-                  </h3>
-                </div><!-- /.card-header --> --}}
-                <div class="card-body">
-                  <div class="tab-content p-0">
-                    <!-- Morris chart - Sales -->
-                    <div class="chart tab-pane active" id="revenue-chart"
-                         style="position: relative; height: 300px;">
-                        {{-- <canvas id="revenue-chart-canvas" height="300" style="height: 300px;"></canvas> --}}
-                        <div id="chartHarga" style="height: 300px;"></div>
                      </div>
                     {{-- <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;">
                       <canvas id="sales-chart-canvas" height="300" style="height: 300px;"></canvas>
@@ -169,7 +164,7 @@
                   <!-- /.card-tools -->
                 </div>
                 <div class="card-body">
-                  <div id="chartPie" style="height: 250px; width: 100%;"></div>
+                  <div id="chartPie" style="height: 300px; width: 100%;"></div>
                 </div>
                 <!-- /.card-body-->
               </div>
@@ -185,7 +180,7 @@
   <!-- /.content-wrapper -->
 @endsection
 
-{{-- @section('script')
+@section('script')
 <script type="text/javascript">
     $(document).ready(function () {
         //chart jumlah produk
@@ -230,48 +225,6 @@
 
             }
         ]
-        });
-
-        //chart total harga
-        var chartHarga = {!! $chartHarga !!};
-
-        Highcharts.chart('chartHarga', {
-            chart: {
-                type: 'column'
-            },
-            title: {
-                text: 'Total Harga Setiap Kategori',
-                // align: 'left'
-            },
-            xAxis: {
-                categories: chartHarga.map(item => item.name),
-                crosshair: true,
-                // accessibility: {
-                //     description: 'Countries'
-                // }
-            },
-            yAxis: {
-            min: 0,
-            title: {
-                text: 'Total Harga'
-            }
-            },
-            tooltip: {
-            valueSuffix: ''
-            },
-            plotOptions: {
-            column: {
-                pointPadding: 0.2,
-                borderWidth: 0
-            }
-            },
-            series: [
-            {
-                name: 'Produk per Kategori',
-                data: chartHarga.map(item => item.y)
-                //
-            }
-            ]
         });
 
         //chart jumlah stok
@@ -320,4 +273,4 @@
         });
     });
 </script>
-@endsection --}}
+@endsection
