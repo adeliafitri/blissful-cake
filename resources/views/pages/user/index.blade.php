@@ -197,8 +197,8 @@
             </div>
 
             <div class="row gy-5">
-            @foreach ($chartData as $menu)
-                @if ($menu['category_name'] === $data['category_name'])
+            @foreach ($data['products'] as $menu)
+                {{-- @if ($menu['category_name'] === $data['category_name']) --}}
                 <div class="col-lg-4 menu-item">
                     {{-- @php
                         $images = json_decode($menu['image']);
@@ -214,7 +214,7 @@
                         Rp{{ number_format($menu['price'], 0, ',', '.') }}
                     </p>
                 </div><!-- Menu Item -->
-                @endif
+                {{-- @endif --}}
               @endforeach
               {{-- <div class="col-lg-4 menu-item">
                 <a href="assets/img/menu/menu-item-5.png" class="glightbox"><img src="assets/img/menu/menu-item-5.png" class="menu-img img-fluid" alt=""></a>

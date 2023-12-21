@@ -32,7 +32,7 @@
           <form action="{{ route('register') }}" method="post">
             @CSRF
             <div class="input-group mb-3">
-              <input type="text" class="form-control" name="nama" placeholder="Full Name">
+              <input type="text" class="form-control" name="name" placeholder="Name">
               <div class="input-group-append">
                 <div class="input-group-text">
                   <span class="fas fa-user"></span>
@@ -62,6 +62,14 @@
                   <span class="fas fa-lock"></span>
                 </div>
               </div>
+            </div>
+            <div class="form-group">
+                {{-- <label for="role">Role</label> --}}
+                <select id="role" name="role" class="form-control" disabled>
+                    <option>Choose Role</option>
+                    <option value="superadmin" selected>Superadmin</option>
+                    <option value="admin">Admin</option>
+                </select>
             </div>
             <div class="row">
               <div class="col-12 mb-2">

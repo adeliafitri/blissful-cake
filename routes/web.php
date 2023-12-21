@@ -32,7 +32,7 @@ Route::middleware(['guest'])->group(function() {
     Route::get('/register', function () {
         return view('pages.register');
     })->name('register');
-    // Route::post('/register', [UserController::class, 'register']);
+    Route::post('/register', [SesiController::class, 'register']);
 
     Route::get('/home', function () {
         return redirect('/dashboard');
@@ -60,6 +60,8 @@ Route::middleware(['guest'])->group(function() {
         Route::get('/profile/{id}', [ProfileController::class, 'show'])->name('profile');
         Route::get('/profile/{id}/edit', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::put('/profile/{id}', [ProfileController::class, 'update'])->name('profile.update');
+        Route::get('/changePass', [ProfileController::class, 'showFormChangePass'])->name('profile.changePass');
+        Route::post('/changePass', [ProfileController::class, 'changePassword'])->name('changePass');
 
         Route::middleware(['userAkses:superadmin'])->group(function () {
             Route::get('/users', [UserController::class, 'index'])->name('users');

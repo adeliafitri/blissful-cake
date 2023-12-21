@@ -60,7 +60,7 @@
                             <label class="custom-file-label" for="image">Choose file</label>
                         </div>
                     </div>
-                    <a href="" class="text-danger">Change Password</a>
+                    <a href="{{ route('profile.changePass') }}" class="text-danger">Change Password</a>
                     {{-- <div class="form-group">
                     <label for="password">Password</label>
                     <input type="password" class="form-control" id="password" rows="3" name="password" placeholder="Password">
